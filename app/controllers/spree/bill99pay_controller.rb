@@ -49,7 +49,7 @@ module Spree
     def checkout_api
       # order = Spree::Order.find(params[:id]) || raise(ActiveRecord::RecordNotFound)
       order_set = OrderSet.new(params[:id])
-      render json:  { 'url' => self.pay_option(order) }
+      render json:  { 'url' => self.pay_option(order_set) }
     end
 
     def query
@@ -121,9 +121,9 @@ module Spree
       end
 
 
-      is_valid = (payment_method.preferences[:merchantAcctId] == params[:merchantAcctId]) && params[:version] == "v2.0" && params[:language].to_i == 1 && params[:signType].to_i == 4 && params[:orderId] == order.number && params[:orderTime] == order.created_at.strftime("%Y%m%d%H%M%S")
+      is_valid = (payment_method.preferences[:merchantAcctId] == params[:merchantAcctId]) && params[:version] == "v2.0" && params[:language].to_i == 1 && params[:signType].to_i == 4 && params[:orderId] == order_set.number && params[:orderTime] == order_set.created_at.strftime("%Y%m%d%H%M%S")
 
-      unless params[:payResult] == "10" && params[:orderAmount] == (order.total * 100).to_i.to_s && is_valid
+      unless params[:payResult] == "10" && params[:orderAmount] == (order_set.total * 100).to_i.to_s && is_valid
         failure_return order_set
         return
       end
