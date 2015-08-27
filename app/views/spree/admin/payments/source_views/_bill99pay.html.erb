@@ -1,20 +1,20 @@
 <fieldset data-hook="bill99pay">
   <legend align="center"><%= Spree.t(:transaction, :scope => :bill99pay) %></legend>
 
-  <div class="row">
+  <div>
     <div class="alpha six columns">
       <dl>
         <dt><%= Spree.t(:merchant_acct_id, :scope => :bill99pay) %>:</dt>
-        <dd><%= payment.source.merchant_acct_id %></dd>
+        <dd><%= payment.source.try(:merchant_acct_id) %></dd>
 
         <dt><%= Spree.t(:out_trade_no, :scope => :bill99pay) %>:</dt>
-        <dd><%= payment.source.order_id %></dd>
+        <dd><%= payment.source.try(:order_id) %></dd>
 
         <dt><%= Spree.t(:deal_id, :scope => :bill99pay) %>:</dt>
-        <dd><%= payment.source.deal_id %></dd>
+        <dd><%= payment.source.try(:deal_id) %></dd>
 
         <dt><%= Spree.t(:bank_id, :scope => :bill99pay) %>:</dt>
-        <dd><%= payment.source.bank_id %></dd>
+        <dd><%= payment.source.try(:bank_id) %></dd>
       </dl>
     </div>
   </div>
